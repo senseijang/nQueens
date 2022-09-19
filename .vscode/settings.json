@@ -1,0 +1,15 @@
+{
+  "C_Cpp.default.configurationProvider": "ms-vscode.makefile-tools",
+  "makefile.launchConfigurations": [
+    {
+      "cwd": "c:\\Users\\Andy\\Desktop\\coding\\C++\\nQueens",
+      "binaryPath": "c:\\Users\\Andy\\Desktop\\coding\\C++\\nQueens\\dog.cpp",
+      "binaryArgs": []
+    },
+    {
+      "cwd": "c:\\Users\\Andy\\Desktop\\coding\\C++\\nQueens",
+      "binaryPath": "c:\\Users\\Andy\\Desktop\\coding\\C++\\nQueens\\main.cpp",
+      "binaryArgs": []
+    }
+  ]
+}
