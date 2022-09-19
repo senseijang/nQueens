@@ -1,5 +1,5 @@
 # [WIP] N-Queens Problem
-## Sunwoo Jang CSCI 355
+## Sunwoo Jang CSCI 362
 
 "The n-queens problem is about finding how many different ways queens can be placed on a chessboard so that none attack each other."
 
