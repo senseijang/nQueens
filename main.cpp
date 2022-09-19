@@ -1,6 +1,23 @@
 #include <iostream>
 #include <stack>
 
+/* dummy class */
+class dummy
+{
+private:
+  int age;
+
+public:
+  dummy()
+  {
+    age = 0;
+  };
+  void sayHi()
+  {
+    std::cout << "Hi!\n";
+  }
+};
+
 void checkInput(int n, bool *invalidInput)
 {
   if (n == 2 || n == 3)
@@ -14,9 +31,8 @@ void checkInput(int n, bool *invalidInput)
   }
 }
 
-int main()
+int getInput()
 {
-  // Start with getting N
   bool invalidInput = true;
   int n = -1;
 
@@ -27,6 +43,17 @@ int main()
     std::cout << std::endl;
     checkInput(n, &invalidInput);
   }
+  return n;
+}
+
+int main()
+{
+  int n = getInput();
+  std::stack<dummy> test;
+  dummy d;
+
+  test.push(d);
+  test.top().sayHi();
 
   return 0;
 }

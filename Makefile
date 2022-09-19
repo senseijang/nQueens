@@ -1,9 +1,12 @@
 CC = g++
-CXXFLAGS = -std=c++11
+CXXFLAGS = -std=c++11 -static
 PROGRAM = nQueens
 
-build:
-	${CC} ${CXXFLAGS} main.cpp -o output.o
+test: test.cpp
+	${CC} ${CXXFLAGS} test.cpp -o test.o
+
+main: main.cpp
+	${CC} ${CXXFLAGS} main.cpp -o main.o
 
 clean:
 	rm *.o
