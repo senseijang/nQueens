@@ -9,7 +9,7 @@ void placeNewQueen(std::stack<int> queens, int filled);
 bool isSpace(std::stack<int> queens, int N);
 void adjustQueen(std::stack<int> queens);
 void backtrack(std::stack<int> queens, int filled, int N);
-void printBoard(std::stack<int> queens);
+void printBoard(std::stack<int> queens, int N);
 
 int main()
 {
@@ -28,8 +28,12 @@ int main()
   int filled = 1;
   std::stack<int> queens;
 
-  for (int i = 0; i < N; i++)
+  queens.push(1);
+
+  while (filled != N)
   {
+    filled++;
+    std::cout << "1st eval: " << !isConflict(queens, N) << "\n";
     if (!isConflict(queens, N))
     {
       placeNewQueen(queens, filled);
@@ -44,7 +48,7 @@ int main()
     }
   }
 
-  printBoard(queens);
+  printBoard(queens, N);
 
   return 0;
 }
@@ -82,6 +86,7 @@ bool isConflict(std::stack<int> queens, int N)
     // check columns
     if (newQueen == compareQueen)
     {
+      std::cout << "columns\n";
       conflict = true;
       keepGoing = false;
     }
@@ -95,6 +100,7 @@ bool isConflict(std::stack<int> queens, int N)
     {
       if (xDiag == newQueen && yDiag == N)
       {
+        std::cout << "primary diagonal\n";
         conflict = true;
         keepGoing = false;
       }
@@ -110,6 +116,7 @@ bool isConflict(std::stack<int> queens, int N)
     {
       if (xDiag == newQueen && yDiag == N)
       {
+        std::cout << "other diagonal\n";
         conflict = true;
         keepGoing = false;
       }
@@ -128,6 +135,7 @@ bool isConflict(std::stack<int> queens, int N)
     queens.push(usedQueens.top());
     usedQueens.pop();
   }
+  std::cout << conflict << std::endl;
   return conflict;
 }
 
@@ -139,20 +147,27 @@ void placeNewQueen(std::stack<int> queens, int filled)
 
 bool isSpace(std::stack<int> queens, int N)
 {
-  int topQueen = queens.top();
-  if (topQueen == N)
+  if (queens.size() != 0)
   {
-    return false;
+    int topQueen = queens.top();
+    if (topQueen == N)
+    {
+      return false;
+    }
+    return true;
   }
   return true;
 }
 
 void adjustQueen(std::stack<int> queens)
 {
-  int topQueen = queens.top();
-  queens.pop();
-  topQueen++;
-  queens.push(topQueen);
+  if (queens.size() != 0)
+  {
+    int topQueen = queens.top();
+    queens.pop();
+    topQueen++;
+    queens.push(topQueen);
+  }
 }
 
 void backtrack(std::stack<int> queens, int filled, int N)
@@ -176,13 +191,24 @@ void backtrack(std::stack<int> queens, int filled, int N)
   }
 }
 
-void printBoard(std::stack<int> queens)
+void printBoard(std::stack<int> queens, int N)
 {
-  int x = queens.top();
+  std::cout << "printing attempted " << queens.size();
+  if (queens.size() != 0)
+  {
+    for (int i = 0; i < N; i++)
+    {
+      if (queens.top() == i)
+      {
+        std::cout << "Q";
+      }
+      else
+      {
+        std::cout << "0";
+      }
+      std::cout << " ";
+    }
+  }
+  std::cout << std::endl;
   queens.pop();
-
-  printBoard(queens);
-
-  std::cout << x << " ";
-  queens.push(x);
 }

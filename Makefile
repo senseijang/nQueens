@@ -1,5 +1,5 @@
 CC = g++
-CXXFLAGS = -std=c++11 -static
+CXXFLAGS = -std=c++11 -static -g
 PROGRAM = nQueens
 
 main: main.cpp
