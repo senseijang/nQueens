@@ -1,3 +1,11 @@
+/*****************
+ * Filename: main.cpp
+ * Author: Andy Jang
+ * Creation Date: 9/17/22
+ * Last Modified On: 9/18/22
+ * Purpose: To solve the N-Queens problem.
+ * ***************/
+
 #include <iostream>
 #include <stack>
 
@@ -78,6 +86,7 @@ void checkInput(int N, bool *invalidInput)
   }
 }
 
+/* checks if any queens conflict with each other */
 bool isConflict(int N)
 {
   bool conflict = false;
@@ -164,12 +173,14 @@ bool isConflict(int N)
   return conflict;
 }
 
+/* places new queen on stack, increment filled */
 void placeNewQueen()
 {
   queens.push(1);
   filled++;
 }
 
+/* checks if there is space for the queen to move right */
 bool isSpace(int N)
 {
   if (queens.size() != 0)
@@ -184,6 +195,7 @@ bool isSpace(int N)
   return true;
 }
 
+/* moves the top queen to the right 1 */
 void adjustQueen()
 {
   if (queens.size() != 0)
@@ -195,6 +207,7 @@ void adjustQueen()
   }
 }
 
+/* backtracks until the next free queen is found */
 void backtrack(int N)
 {
   queens.pop();
@@ -221,6 +234,7 @@ void backtrack(int N)
   }
 }
 
+/* prints the board */
 void printBoard(int N)
 {
   // std::cout << "printing attempted " << queens.size();
@@ -246,6 +260,7 @@ void printBoard(int N)
   }
 }
 
+/* initializes the stack to prevent segmentation errors */
 void initStack()
 {
   filled += 2;
