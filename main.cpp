@@ -3,19 +3,19 @@
 
 /* Function Prototpyes */
 void checkInput(int N, bool *invalidInput);
-bool isConflict();
+bool isConflict(std::stack<int> queens, int N);
 void solution();
-void placeNewQueen();
-bool roomExists();
-void adjustQueen();
-void backtrack();
-void printBoard();
+void placeNewQueen(std::stack<int> queens, int filled);
+bool isSpace(std::stack<int> queens, int N);
+void adjustQueen(std::stack<int> queens);
+void backtrack(std::stack<int> queens, int filled, int N);
+void printBoard(std::stack<int> queens);
 
 int main()
 {
   // Start with getting N
   bool invalidInput = true;
-  int N;
+  int N = -1;
 
   while (invalidInput)
   {
@@ -25,26 +25,26 @@ int main()
     checkInput(N, &invalidInput);
   }
 
-  // initial an array based on N
-  // int board[N][N] = {};
   int filled = 1;
   std::stack<int> queens;
 
-  while (filled != N)
+  for (int i = 0; i < N; i++)
   {
-    if (!isConflict())
+    if (!isConflict(queens, N))
     {
-      placeNewQueen();
+      placeNewQueen(queens, filled);
     }
-    else if (roomExists())
+    else if (isSpace(queens, N))
     {
-      adjustQueen();
+      adjustQueen(queens);
     }
     else
     {
-      backtrack();
+      backtrack(queens, filled, N);
     }
   }
+
+  printBoard(queens);
 
   return 0;
 }
@@ -61,4 +61,128 @@ void checkInput(int N, bool *invalidInput)
     *invalidInput = false;
     std::cout << "N-value: " << N << std::endl;
   }
+}
+
+bool isConflict(std::stack<int> queens, int N)
+{
+  bool conflict = false;
+  bool keepGoing = true;
+  std::stack<int> usedQueens;
+
+  int newQueen = queens.top();
+  usedQueens.push(newQueen);
+  queens.pop();
+
+  while (keepGoing)
+  {
+    int compareQueen = queens.top();
+    usedQueens.push(compareQueen);
+    usedQueens.pop();
+
+    // check columns
+    if (newQueen == compareQueen)
+    {
+      conflict = true;
+      keepGoing = false;
+    }
+
+    // check diagonals
+    int yDiag = N - 1;
+    int xDiag = compareQueen;
+
+    // primary diagonal
+    for (int i = 0; i < N; i++)
+    {
+      if (xDiag == newQueen && yDiag == N)
+      {
+        conflict = true;
+        keepGoing = false;
+      }
+      xDiag++;
+      yDiag++;
+    }
+
+    // other diagonal
+    yDiag = N - 1;
+    xDiag = compareQueen;
+
+    for (int j = 0; j < N; j++)
+    {
+      if (xDiag == newQueen && yDiag == N)
+      {
+        conflict = true;
+        keepGoing = false;
+      }
+      xDiag--;
+      yDiag++;
+    }
+
+    if (queens.size() == 0)
+    {
+      keepGoing = false;
+    }
+  }
+  // remake og stack
+  while (usedQueens.size() > 0)
+  {
+    queens.push(usedQueens.top());
+    usedQueens.pop();
+  }
+  return conflict;
+}
+
+void placeNewQueen(std::stack<int> queens, int filled)
+{
+  queens.push(1);
+  filled++;
+}
+
+bool isSpace(std::stack<int> queens, int N)
+{
+  int topQueen = queens.top();
+  if (topQueen == N)
+  {
+    return false;
+  }
+  return true;
+}
+
+void adjustQueen(std::stack<int> queens)
+{
+  int topQueen = queens.top();
+  queens.pop();
+  topQueen++;
+  queens.push(topQueen);
+}
+
+void backtrack(std::stack<int> queens, int filled, int N)
+{
+  queens.pop();
+  filled--;
+
+  bool keepGoing = true;
+  while (keepGoing)
+  {
+    if (isSpace(queens, N))
+    {
+      adjustQueen(queens);
+      keepGoing = false;
+    }
+    else
+    {
+      queens.pop();
+      filled--;
+    }
+  }
+}
+
+void printBoard(std::stack<int> queens)
+{
+  int x = queens.top();
+  queens.pop();
+
+  printBoard(queens);
+
+  std::cout << x << " ";
+  queens.push(x);
 }
