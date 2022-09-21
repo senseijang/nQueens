@@ -11,7 +11,7 @@ The goal is to place them all on the board without 1 of them conflicting with ea
 Download the .zip file in the repository and extract all of the files.
 When using Linux or Git Bash the program can be run with this command:
 `make run`
-This should auto-compile the cpp file and run it as well.
+This should auto-compile the .cpp file and run it as well.
 
 When the program is run, it'll have a prompt:
 `N: `

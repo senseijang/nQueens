@@ -1,5 +1,5 @@
 /*****************
- * Filename: main.cpp
+ * Filename: nQueens.cpp
  * Author: Andy Jang
  * Creation Date: 9/17/22
  * Last Modified On: 9/18/22

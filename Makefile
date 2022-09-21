@@ -5,8 +5,8 @@ PROGRAM = nQueens
 run: nQueens.o
 	./nQueens.o
 
-nQueens.o: main.cpp
-	${CC} ${CXXFLAGS} main.cpp -o nQueens.o
+nQueens.o: nQueens.cpp
+	${CC} ${CXXFLAGS} nQueens.cpp -o nQueens.o
 
 clean:
 	rm *.o
