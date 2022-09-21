@@ -46,20 +46,24 @@ int main()
     return 0;
   }
 
+  // end user input
+  // init stack by adding 2 entries onto the stack
   initStack();
 
+  // contains the N-Queens problem logic, had to add 1 more iteration because of short circuiting.
   while (filled != N + 1)
   {
-    // std::cout << "infinite loop \n";
-    // std::cout << "!isConflict result: " << !isConflict(N) << "\n";
+    // if no conflicts, then add new queen
     if (!isConflict(N))
     {
       placeNewQueen();
     }
+    // if conflicts, but has space, increment x-value of queen by 1
     else if (isSpace(N))
     {
       adjustQueen();
     }
+    // else backtrack
     else
     {
       backtrack(N);
@@ -67,6 +71,7 @@ int main()
   }
 
   // omit filler
+  // have to remove as it is an excess entry
   queens.pop();
   printBoard(N);
 
@@ -94,22 +99,21 @@ bool isConflict(int N)
   bool keepGoing = true;
   std::stack<int> usedQueens;
 
+  // compares the top queen to every other entry
   int newQueen = queens.top();
   usedQueens.push(newQueen);
   queens.pop();
 
+  // goes through the rest of the stack
   while (keepGoing)
   {
     int compareQueen = queens.top();
     usedQueens.push(compareQueen);
     queens.pop();
 
-    // std::cout << "queens size: " << queens.size() << std::endl;
-
     // check columns
     if (newQueen == compareQueen)
     {
-      // std::cout << "column conflict\n";
       conflict = true;
       keepGoing = false;
     }
@@ -118,26 +122,25 @@ bool isConflict(int N)
     int yDiag = queens.size() + 1;
     int xDiag = compareQueen;
 
-    // primary diagonal
+    // check primary diagonal (bottom-left to top-right)
     for (int i = 0; i < N; i++)
     {
       if (xDiag == newQueen && yDiag == filled)
       {
-        // std::cout << "primary diagonal conflict\n";
         conflict = true;
         keepGoing = false;
       }
       xDiag++;
       yDiag++;
 
-      // check overflow
+      // check overflow, if on border, stop checking diagonal
       if (xDiag > N || yDiag > N)
       {
         break;
       }
     }
 
-    // other diagonal
+    // check other diagonal (bottom-right to top-left)
     yDiag = queens.size() + 1;
     xDiag = compareQueen;
 
@@ -145,20 +148,20 @@ bool isConflict(int N)
     {
       if (xDiag == newQueen && yDiag == filled)
       {
-        // std::cout << "other diagonal conflict\n";
         conflict = true;
         keepGoing = false;
       }
       xDiag--;
       yDiag++;
 
-      // check overflow
+      // check overflow, if on border, stop checking diagonal
       if (xDiag <= 0 || yDiag > N)
       {
         break;
       }
     }
 
+    // when stack is empty, no more checks needed
     if (queens.size() == 0)
     {
       keepGoing = false;
@@ -170,7 +173,6 @@ bool isConflict(int N)
     queens.push(usedQueens.top());
     usedQueens.pop();
   }
-  // std::cout << conflict << std::endl;
   return conflict;
 }
 
@@ -187,10 +189,12 @@ bool isSpace(int N)
   if (queens.size() != 0)
   {
     int topQueen = queens.top();
+    // if no room
     if (topQueen == N)
     {
       return false;
     }
+    // else has room
     return true;
   }
   return true;
@@ -208,7 +212,8 @@ void adjustQueen()
   }
 }
 
-/* backtracks until the next free queen is found */
+/* backtracks until the next free queen is found
+   uses the algorithm given to us on the slide to readjust the stack */
 void backtrack(int N)
 {
   queens.pop();
@@ -217,9 +222,11 @@ void backtrack(int N)
   bool keepGoing = true;
   while (keepGoing)
   {
+    // if space exists, then queen can be adjusted
     if (isSpace(N))
     {
       adjustQueen();
+      //  if there is 1 queen left, 1 more is added to prevent segmentation faults
       if (queens.size() == 1)
       {
         filled++;
@@ -227,6 +234,7 @@ void backtrack(int N)
       }
       keepGoing = false;
     }
+    // else no valid room, so pop and check next entry on stack
     else
     {
       queens.pop();
@@ -238,7 +246,6 @@ void backtrack(int N)
 /* prints the board */
 void printBoard(int N)
 {
-  // std::cout << "printing attempted " << queens.size();
   if (queens.size() != 0)
   {
     std::cout << "Solution found!\n";
