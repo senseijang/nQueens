@@ -4,7 +4,7 @@
  * Creation Date: 9/17/22
  * Last Modified On: 9/18/22
  * Purpose: To solve the N-Queens problem.
- * WARNING: This program is horrible optimized. Please be wary with any value above N = 20, it'll take awhile.
+ * WARNING: This program is horrible optimized. Please be wary with any value above N = 20, it'll take awhile. I got to N = 25 at most.
  * ***************/
 
 #include <iostream>
