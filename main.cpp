@@ -4,6 +4,7 @@
  * Creation Date: 9/17/22
  * Last Modified On: 9/18/22
  * Purpose: To solve the N-Queens problem.
+ * WARNING: This program is horrible optimized. Please be wary with any value above N = 20, it'll take awhile.
  * ***************/
 
 #include <iostream>
@@ -240,19 +241,34 @@ void printBoard(int N)
   // std::cout << "printing attempted " << queens.size();
   if (queens.size() != 0)
   {
+    std::cout << "Solution found!\n";
+    std::cout << std::endl;
     for (int i = 0; i < N; i++)
     {
+      if (i == 0)
+      {
+        std::cout << " ";
+        for (int a = 0; a < N; a++)
+        {
+          std::cout << "_ ";
+        }
+        std::cout << std::endl;
+      }
       for (int j = 0; j < N; j++)
       {
+        if (j == 0)
+        {
+          std::cout << "|";
+        }
         if (queens.top() - 1 == j)
         {
           std::cout << "Q";
         }
         else
         {
-          std::cout << "0";
+          std::cout << "_";
         }
-        std::cout << " ";
+        std::cout << "|";
       }
       queens.pop();
       std::cout << std::endl;
